@@ -1,0 +1,717 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Isha Nawaz Analytics</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: executive dashboard. Status bar, then a 12-column bento grid of metric cards (profile, KPIs, stack marquee, case studies, experience, skills, education, contact). Motion limited to hover states and the stack marquee. Deliberately one dark look. */
+:root{
+  color-scheme:dark;
+  --bg:#080C0B; --surface:#0E1412; --surface-2:#121A17; --border:#1C2622; --border-2:#2A3832;
+  --ink:#E8EEEB; --muted:#8A9A93; --faint:#7F8F88;
+  --accent:#34D399; --accent-ink:#04120C; --accent-dim:rgba(52,211,153,.45); --accent-soft:rgba(52,211,153,.10);
+  --navy:#1E3A5F; --blue:#60A5FA; --amber:#FBBF24; --violet:#A78BFA;
+  --light:#34D399; --glow:#60A5FA; --streak:#94A3B8;
+  --c-ai:#34D399; --c-bi:#FBBF24; --c-an:#60A5FA; --c-rs:#A78BFA;
+  --f-sans:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --r:12px;
+  --ease-out:cubic-bezier(0.23,1,0.32,1); --ease-drawer:cubic-bezier(0.32,0.72,0,1);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-sans);font-size:14.5px;line-height:1.55;font-feature-settings:"cv11","ss01";overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+[hidden]{display:none!important}
+img{max-width:100%}
+::selection{background:var(--accent);color:var(--accent-ink)}
+html{scrollbar-color:var(--border-2) var(--bg)}
+input,textarea{caret-color:var(--accent)}
+a{text-underline-offset:3px}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.02em;text-wrap:balance;line-height:1.15}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono)}
+.label{font-family:var(--f-mono);font-size:10.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.note{font-size:12px;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+.up{color:var(--accent)}
+
+/* Top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:rgba(8,12,11,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.top-in{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:10px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;flex:none;background:none;border:0;padding:0}
+.mark{width:28px;height:28px;border-radius:7px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--f-mono);font-weight:600;font-size:12px}
+.brand b{font-weight:600;font-size:14px}
+.brand span{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
+.nav::-webkit-scrollbar{display:none}
+.nav a{padding:6px 10px;border-radius:7px;color:var(--muted);text-decoration:none;font-size:13px;white-space:nowrap;transition:color .15s,background .15s}
+.nav a:hover{color:var(--ink);background:var(--surface-2)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:8px;border:1px solid var(--border-2);background:var(--surface-2);color:var(--ink);font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;transition:border-color .15s ease,background-color .15s ease,color .15s ease,transform .14s var(--ease-out)}
+.btn:active{transform:scale(.97)}
+.btn:hover{border-color:var(--accent-dim)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.btn.primary:hover{background:#5EE3B0;border-color:#5EE3B0}
+.btn svg{width:15px;height:15px;flex:none}
+.top .btn{height:32px;flex:none}
+
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:16px 32px;display:grid;gap:12px}
+
+/* Status strip */
+.strip{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);padding:2px 2px 4px}
+.strip b{color:var(--ink);font-weight:500}
+.live{display:inline-flex;align-items:center;gap:7px;color:var(--accent)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* Bento grid */
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px}
+.s-12{grid-column:span 12}.s-8{grid-column:span 8}.s-7{grid-column:span 7}.s-6{grid-column:span 6}.s-5{grid-column:span 5}.s-4{grid-column:span 4}.s-3{grid-column:span 3}
+.r-2{grid-row:span 2}
+.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;min-width:0;display:flex;flex-direction:column;gap:12px;transition:border-color .15s ease,background-color .15s ease,transform .22s var(--ease-out),box-shadow .22s var(--ease-out)}
+.card:hover{border-color:var(--border-2)}
+.card.click{cursor:pointer;text-align:left;font:inherit;color:inherit}
+.card.click:hover{border-color:var(--accent-dim);background:var(--surface-2)}
+@media (hover:hover) and (pointer:fine){.card.click:hover{transform:translateY(-2px);box-shadow:0 10px 24px -14px rgba(0,0,0,.8)}}
+.card.click:active{transform:translateY(0) scale(.995)}
+.ch{display:flex;justify-content:space-between;align-items:center;gap:6px 10px;flex-wrap:wrap}
+.ch .meta{font-family:var(--f-mono);font-size:10.5px;color:var(--faint)}
+.sec{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:6px 16px;flex-wrap:wrap;padding:18px 2px 2px;scroll-margin-top:64px}
+.sec h2{font-size:18px}
+.sec .note{font-family:var(--f-mono);font-size:11px}
+
+/* Profile */
+.profile{justify-content:space-between;gap:18px}
+.profile h1{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.03em}
+.profile h1 span{color:var(--muted);font-weight:500}
+.role{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-family:var(--f-mono);font-size:11px;padding:3px 9px;border-radius:6px;border:1px solid var(--border-2);color:var(--muted);background:var(--surface-2)}
+.pill.acc{color:var(--accent);border-color:var(--accent-dim);background:var(--accent-soft)}
+.profile p{margin:0;color:var(--muted);max-width:60ch;font-size:14.5px}
+.profile p b{color:var(--ink);font-weight:500}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.copied{font-family:var(--f-mono);font-size:11px;color:var(--accent);min-height:1em}
+
+/* Metrics */
+.metric .v{font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.metric .v small{font-size:15px;color:var(--muted);font-weight:500;margin-left:2px}
+.metric .d{font-size:12.5px;color:var(--muted)}
+.delta{font-family:var(--f-mono);font-size:11px;padding:2px 7px;border-radius:5px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.hero-metric{background:linear-gradient(160deg,rgba(52,211,153,.10),rgba(30,58,95,.20) 70%),var(--surface)}
+.hero-metric .v{font-size:clamp(34px,4vw,48px)}
+.hero-metric .v .arr{color:var(--accent);font-weight:500;margin:0 .15em}
+.cmp{display:grid;gap:7px}
+.cmp div{display:grid;grid-template-columns:5.5em minmax(0,1fr) 6.6em;gap:10px;align-items:center;font-size:12px;color:var(--muted)}
+.cmp i{display:block;height:8px;border-radius:2px;background:var(--border-2)}
+.cmp div:last-child i{background:var(--accent);width:.5%;min-width:3px}
+.cmp em{font-style:normal;font-family:var(--f-mono);font-size:11px;text-align:right;color:var(--ink)}
+
+/* Marquee */
+.stack{padding:14px 0;gap:10px;overflow:hidden}
+.stack .ch{padding:0 18px}
+.marquee{display:flex;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:flex;gap:8px;padding-right:8px;flex:none;animation:slide 48s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-100%)}}
+.tool{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:7px;border:1px solid var(--border-2);background:var(--surface-2);font-family:var(--f-mono);font-size:12px;white-space:nowrap;transition:border-color .15s,color .15s}
+.tool i{width:6px;height:6px;border-radius:2px;background:var(--tc)}
+.tool:hover{border-color:var(--accent-dim);color:var(--accent)}
+
+/* Case cards */
+.case .q{font-size:15.5px;font-weight:600;line-height:1.35;letter-spacing:-.01em}
+.case .kpi{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.case .kpi b{font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--cc);font-variant-numeric:tabular-nums}
+.case .kpi span{font-size:12.5px;color:var(--muted);max-width:32ch}
+.case .viz{margin-top:auto}
+.case .viz svg{display:block;width:100%;height:auto}
+.case .foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:10px}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-family:var(--f-mono);font-size:10.5px;padding:2px 7px;border-radius:5px;border:1px solid var(--border-2);color:var(--muted)}
+.src{font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+.src.real{color:var(--accent)}
+.open{font-family:var(--f-mono);font-size:11px;color:var(--muted);transition:color .15s}
+.card.click:hover .open{color:var(--accent)}
+
+
+/* Tools I built */
+.build h3{font-size:20px;letter-spacing:-.02em}
+.build p{margin:0;color:var(--muted);font-size:14px}
+.build-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:760px){.build-grid{grid-template-columns:minmax(0,1fr)}}
+.build-txt{display:grid;gap:12px;min-width:0}
+.how{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:13px}
+.how li{display:grid;grid-template-columns:16px minmax(0,1fr);gap:8px}
+.how li::before{content:"→";color:var(--cc,var(--accent));font-family:var(--f-mono)}
+.mock{border:1px solid var(--border-2);border-radius:10px;overflow:hidden;background:#eef1f6}
+.mock svg{display:block;width:100%;height:auto}
+.fine{font-size:11.5px;color:var(--faint);margin:0}
+.build .kpi{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.build .kpi b{font-size:30px;font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--cc);font-variant-numeric:tabular-nums}
+.build .kpi span{font-size:12.5px;color:var(--muted);max-width:30ch}
+.ttl{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.meta-line{font-family:var(--f-mono);font-size:11px;color:var(--faint);margin-top:-6px}
+.meta-line .real-t{color:var(--accent)}
+.case .meta-line{margin-top:0}
+.new{flex:none;font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:5px;background:var(--accent);color:var(--accent-ink);font-weight:600}
+
+/* Experience table */
+.tbl{overflow-x:auto;margin:0 -4px}
+table.xp{border-collapse:collapse;width:100%;min-width:520px;font-size:13px}
+.xp th{text-align:left;font-family:var(--f-mono);font-weight:500;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:0 4px 8px;border-bottom:1px solid var(--border)}
+.xp td{padding:11px 4px;border-bottom:1px solid var(--border);vertical-align:top}
+.xp tr:last-child td{border-bottom:0}
+.xp tbody tr{transition:background .15s}
+.xp tbody tr:hover{background:var(--surface-2)}
+.xp .when{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.xp .who b{display:block;font-weight:600}
+.xp .who span{color:var(--muted);font-size:12.5px}
+.xp .imp{display:flex;flex-wrap:wrap;gap:4px}
+
+/* Skills */
+.skills{display:grid;gap:12px}
+.skills div{display:grid;grid-template-columns:8.5em minmax(0,1fr);gap:10px;align-items:start}
+.skills dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);padding-top:4px}
+.skills dd{margin:0;display:flex;flex-wrap:wrap;gap:4px}
+.skills dl{margin:0}
+
+/* Small cards */
+.kv{display:grid;gap:8px;margin:0}
+.kv div{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px dashed var(--border);padding-bottom:8px}
+.kv div:last-child{border-bottom:0;padding-bottom:0}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;text-align:right;font-weight:500}
+.list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.list li{display:grid;gap:1px;font-size:13px}
+.list b{font-weight:600}
+.list span{color:var(--muted);font-size:12.5px}
+.contact .email{font-family:var(--f-mono);font-size:13px;user-select:all;overflow-wrap:anywhere;background:var(--surface-2);border:1px solid var(--border-2);border-radius:8px;padding:9px 11px}
+
+footer{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px 28px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--faint)}
+
+/* Dialog */
+dialog{border:1px solid var(--border-2);border-radius:14px;background:var(--surface);color:var(--ink);padding:0;width:min(880px,calc(100vw - 32px));max-height:calc(100dvh - 48px);overscroll-behavior:contain}
+dialog::backdrop{background:rgba(2,5,4,.72)}
+.dlg{padding:24px;display:grid;gap:16px}
+.dlg-head{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.dlg h3{font-size:24px;margin-top:6px}
+.x{border:1px solid var(--border-2);background:var(--surface-2);width:34px;height:34px;border-radius:8px;flex:none;display:grid;place-items:center;transition:border-color .15s ease,transform .14s var(--ease-out)}
+.x:active{transform:scale(.94)}
+.x:hover{border-color:var(--accent-dim)}
+.cs{display:grid;gap:18px}
+.cs h4{font-family:var(--f-mono);font-weight:500;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+.cs p{margin:0}
+.cs ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.cs .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.cs table{border-collapse:collapse;width:100%;font-size:13px}
+.cs th,.cs td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.cs th{font-family:var(--f-mono);font-weight:500;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.cs td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.cs svg{max-width:600px}
+.cs code{font-family:var(--f-mono);font-size:12px;color:var(--accent)}
+.impact-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.impact-row div{border:1px solid var(--border);border-radius:10px;padding:12px 14px;background:var(--surface-2)}
+.impact-row b{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em;color:var(--accent);line-height:1.15;font-variant-numeric:tabular-nums}
+.impact-row span{font-size:12px;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.wire{background:#fff;border-radius:10px;padding:10px;max-width:300px}
+.wire svg{display:block;width:100%;height:auto}
+.story{background:var(--accent-soft);border-radius:8px;padding:10px 14px;font-size:13.5px}
+.story b{font-weight:600}
+
+
+/* Motion: one entrance on load, then the turnaround bars draw. */
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+@keyframes fadein{from{opacity:0}}
+@keyframes draw{from{clip-path:inset(0 100% 0 0)}}
+.enter{animation:rise .6s var(--ease-out) both;animation-delay:calc(var(--i,0)*60ms)}
+.cmp div:first-child i{animation:draw 1.1s var(--ease-out) .45s both}
+.cmp div:last-child i,.cmp div:last-child em{animation:fadein .3s ease 1.45s both}
+.hero-metric .delta{animation:fadein .3s ease 1.6s both}
+@media (prefers-reduced-motion:reduce){
+  .enter{animation:fadein .3s ease both}
+  .cmp div i,.cmp div em,.hero-metric .delta{animation:none}
+}
+/* Case dialog: modal scales in from center; on phones it slides up as a sheet */
+dialog{opacity:0;transform:scale(.96);transition:opacity .2s var(--ease-out),transform .24s var(--ease-out),overlay .24s allow-discrete,display .24s allow-discrete}
+dialog[open]{opacity:1;transform:none}
+@starting-style{dialog[open]{opacity:0;transform:scale(.96)}}
+dialog::backdrop{transition:background-color .2s ease,overlay .24s allow-discrete,display .24s allow-discrete}
+@starting-style{dialog[open]::backdrop{background-color:rgba(2,5,4,0)}}
+
+/* Responsive: 12 → 6 → 2 columns */
+@media (max-width:1024px){
+  .bento{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .s-12,.s-8,.s-7,.s-6{grid-column:span 6}
+  .s-5,.s-4,.s-3{grid-column:span 3}
+  .r-2{grid-row:auto}
+}
+@media (max-width:640px){
+  body{font-size:14px}
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .s-12,.s-8,.s-7,.s-6,.s-5,.s-4{grid-column:span 2}
+  .s-3{grid-column:span 1}
+  .card{padding:16px}
+  .metric .v{font-size:28px}
+  .metric .d{font-size:12px}
+  .brand > span:not(.mark),.top .btn .t{display:none}
+  .nav a{padding:6px 8px;font-size:12.5px}
+  .skills div{grid-template-columns:minmax(0,1fr);gap:6px}
+  .cs .two,.impact-row{grid-template-columns:minmax(0,1fr)}
+  dialog{width:100%;max-width:100%;margin:auto 0 0;border-radius:16px 16px 0 0;max-height:90dvh;opacity:1;transform:translateY(100%);transition:transform .32s var(--ease-drawer),overlay .32s allow-discrete,display .32s allow-discrete}
+  dialog[open]{transform:none}
+  @starting-style{dialog[open]{opacity:1;transform:translateY(100%)}}
+  .dlg{padding:18px 16px calc(22px + env(safe-area-inset-bottom,0px))}
+  .dlg h3{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition-property:opacity,background-color,border-color,color!important}
+  dialog,dialog[open]{transform:none!important}
+  .track{animation:none}
+  .marquee{-webkit-mask:none;mask:none}
+  .marquee .track{flex-wrap:wrap;padding:0 18px}
+  .marquee .track[aria-hidden]{display:none}
+}
+</style>
+<!-- body -->
+<header class="top">
+  <div class="top-in">
+    <button class="brand" type="button" data-go="overview"><span class="mark">IN</span><b>Isha Nawaz</b><span>/ analyst</span></button>
+    <nav class="nav" aria-label="Sections">
+      <a href="#projects" data-go="projects">Projects</a>
+      <a href="#cases" data-go="cases">Case studies</a>
+      <a href="#experience" data-go="experience">Experience</a>
+      <a href="#skills" data-go="skills">Skills</a>
+      <a href="#contact" data-go="contact">Contact</a>
+    </nav>
+    <a class="btn primary" href="resume.pdf" download="Fathima-Isha-Nawaz-Resume.pdf"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3M3 12.5h10"/></svg><span class="t">Résumé</span></a>
+  </div>
+</header>
+
+<main class="wrap" id="overview">
+  <div class="strip">
+    <span class="live"><i></i>Available now</span>
+    <span>Role <b>Business / Data Analyst</b></span>
+    <span>Base <b>Al Khobar, KSA</b></span>
+    <span>Open to <b>KSA · UAE</b></span>
+    <span>Latest build <b>CV Fit</b></span>
+    <span>Updated <b>Nov 2026</b></span>
+  </div>
+
+  <div class="bento">
+    <!-- Profile -->
+    <section class="card profile s-6 r-2 enter" style="--i:0" aria-labelledby="pf-h">
+      <div style="display:grid;gap:12px">
+        <h1 id="pf-h">Fathima Isha Nawaz <span>· Business &amp; Data Analyst</span></h1>
+        <div class="role"><span class="pill acc">AI &amp; automation</span><span class="pill">KPI dashboards</span><span class="pill">Requirements</span><span class="pill">Forecasting</span></div>
+        <p>I turn messy data into decisions and slow reports into minutes. At <b>Emirates Group</b> I built AI agents that cut analysis turnaround from <b>7 days to 3 minutes</b>. I work in Python, SQL, Excel, Power BI and Tableau, and I build my own tools too: most recently <b>CV Fit</b>, an AI app that tailors a CV to any job posting.</p>
+      </div>
+      <div style="display:grid;gap:6px">
+        <div class="actions">
+          <a class="btn primary" href="resume.pdf" download="Fathima-Isha-Nawaz-Resume.pdf"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v8m0 0L5 7m3 3 3-3M3 12.5h10"/></svg>Download résumé</a>
+          <button class="btn copybtn" type="button" data-email="ishanawaz2410@gmail.com">Copy email</button>
+          <a class="btn" href="https://www.linkedin.com/in/isha-nawaz" target="_blank" rel="noopener">LinkedIn <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6.5 5H11v4.5"/></svg></a>
+        </div>
+        <span class="copied" aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- Headline metric -->
+    <section class="card metric hero-metric s-6 enter" style="--i:1" aria-label="Report turnaround">
+      <div class="ch"><span class="label">Analyst turnaround · Emirates</span><span class="delta">−99.97%</span></div>
+      <div class="v">7 days<span class="arr">→</span>3 min</div>
+      <div class="cmp" aria-hidden="true">
+        <div><span>Manual</span><i></i><em>10,080 min</em></div>
+        <div><span>AI agents</span><i></i><em>3 min</em></div>
+      </div>
+      <div class="d">Two agentic AI systems built in Dataiku that generate route and competitor analysis with branded PowerPoint reports.</div>
+    </section>
+
+    <!-- KPI cards -->
+    <section class="card metric s-3 enter" style="--i:2"><div class="ch"><span class="label">Rows processed</span></div><div class="v">595K<small>+</small></div><div class="d">Schedule records per competitor intelligence run</div></section>
+    <section class="card metric s-3 enter" style="--i:3"><div class="ch"><span class="label">Cost centres</span></div><div class="v">120<small>+</small></div><div class="d">Onboarded to an internal AI platform after a workflow fix</div></section>
+
+    <!-- Tech stack marquee -->
+    <section class="card stack s-12" aria-label="Tech stack">
+      <div class="ch"><span class="label">Tech stack</span><span class="meta">hover to pause</span></div>
+      <div class="marquee" id="marquee"></div>
+    </section>
+
+    <!-- More KPIs -->
+    <section class="card metric s-3"><div class="ch"><span class="label">CGPA</span><span class="delta">Dean's List</span></div><div class="v">3.36<small>/4.00</small></div><div class="d">AUS · Merit Scholarship</div></section>
+    <section class="card metric s-3"><div class="ch"><span class="label">Roles</span></div><div class="v">4</div><div class="d">Emirates · Apparel Group · GITCO · Mental Health AE</div></section>
+    <section class="card metric s-3"><div class="ch"><span class="label">Campaign lift</span><span class="delta">GITCO</span></div><div class="v">+15<small>%</small></div><div class="d">Targeted campaign effectiveness from Excel analysis</div></section>
+    <section class="card metric s-3"><div class="ch"><span class="label">Engagement</span><span class="delta">Apparel Group</span></div><div class="v">+25<small>%</small></div><div class="d">Social engagement from marketing assets I designed</div></section>
+
+    <!-- Tools I built -->
+    <div class="sec" id="projects"><h2>Tools I built</h2><span class="note">Live apps · open them and try</span></div>
+    <section class="card build s-8" aria-labelledby="cvfit-h" style="--cc:var(--c-ai)">
+      <div class="build-grid">
+        <div class="build-txt">
+          <div class="ttl"><h3 id="cvfit-h">CV Fit: tailor a CV to any job posting</h3><span class="new">New · Nov 2026</span></div>
+          <span class="meta-line">AI web app · live</span>
+          <p>I was rewriting my CV for every application, so I built a tool to do the heavy lifting. Paste a job posting and CV Fit shows which skills your CV already proves, flags the gaps, and rewrites the CV for that role.</p>
+          <ul class="how">
+            <li>Instant keyword check against 40+ analyst skills, with the posting highlighted</li>
+            <li>Claude API rates each requirement as strong, partial or a gap, with evidence from the CV</li>
+            <li>Builds a full tailored CV and exports it as a one-page Word file</li>
+            <li>Guardrail in the prompt: rewrites may only use facts already in the CV</li>
+          </ul>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">Claude API</span><span class="tag">Prompt design</span><span class="tag">Vercel serverless</span><span class="tag">Word export</span></div>
+        </div>
+        <div class="mock"><svg viewBox="0 0 360 236" role="img" aria-label="CV Fit app: fit gauges, matched and missing skills, and a tailored CV">
+  <rect width="360" height="236" fill="#eef1f6"/>
+  <rect width="360" height="50" fill="#18203a"/>
+  <text x="16" y="31" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="19" fill="#f4f6fb">CV</text>
+  <rect x="54" y="15" width="34" height="22" rx="3" fill="#ffd84d" transform="skewX(-8)"/>
+  <text x="54" y="32" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="19" fill="#18203a">Fit</text>
+  <g font-family="Inter,Arial,sans-serif" font-size="8.5" fill="#f4f6fb">
+    <rect x="166" y="16" width="58" height="18" rx="9" fill="none" stroke="#3a4462"/><circle cx="176" cy="25" r="5.5" fill="#e4573d"/><text x="185" y="28">Paste</text>
+    <rect x="229" y="16" width="56" height="18" rx="9" fill="none" stroke="#3a4462"/><text x="241" y="28">Check fit</text>
+    <rect x="290" y="16" width="56" height="18" rx="9" fill="none" stroke="#3a4462"/><text x="303" y="28">Tailor CV</text>
+  </g>
+  <rect x="12" y="62" width="108" height="76" rx="8" fill="#fff"/>
+  <circle cx="44" cy="100" r="22" fill="none" stroke="#dde2ec" stroke-width="7"/>
+  <circle cx="44" cy="100" r="22" fill="none" stroke="#a66a00" stroke-width="7" stroke-dasharray="91 139" transform="rotate(-90 44 100)"/>
+  <text x="44" y="104" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="12" fill="#18203a">66%</text>
+  <text x="74" y="96" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="700" fill="#5d6680">KEYWORDS</text>
+  <text x="74" y="107" font-family="Inter,Arial,sans-serif" font-size="7" fill="#5d6680">21 of 32</text>
+  <rect x="128" y="62" width="220" height="76" rx="8" fill="#18203a"/>
+  <text x="140" y="80" font-family="Inter,Arial,sans-serif" font-size="7" font-weight="700" fill="#a9b2cc">VERDICT · AI FIT 62/100</text>
+  <rect x="140" y="88" width="190" height="5" rx="2.5" fill="#3a4462"/><rect x="140" y="99" width="170" height="5" rx="2.5" fill="#3a4462"/><rect x="140" y="110" width="182" height="5" rx="2.5" fill="#3a4462"/><rect x="140" y="121" width="120" height="5" rx="2.5" fill="#3a4462"/>
+  <rect x="12" y="148" width="180" height="78" rx="8" fill="#fff"/>
+  <g font-family="Inter,Arial,sans-serif" font-size="7.5" font-weight="600">
+    <rect x="22" y="158" width="40" height="15" rx="7.5" fill="#dff3e8"/><text x="29" y="168" fill="#16804f">✓ SQL</text>
+    <rect x="66" y="158" width="54" height="15" rx="7.5" fill="#dff3e8"/><text x="73" y="168" fill="#16804f">✓ Power BI</text>
+    <rect x="124" y="158" width="58" height="15" rx="7.5" fill="#dff3e8"/><text x="131" y="168" fill="#16804f">✓ Airline</text>
+    <rect x="22" y="179" width="68" height="15" rx="7.5" fill="#fbe4df"/><text x="29" y="189" fill="#c2402b">Data profiling</text>
+    <rect x="94" y="179" width="66" height="15" rx="7.5" fill="#fbe4df"/><text x="101" y="189" fill="#c2402b">Glossaries</text>
+    <rect x="22" y="202" width="96" height="16" rx="5" fill="#e4573d"/><text x="31" y="213" fill="#fff">Build tailored CV</text>
+  </g>
+  <rect x="202" y="148" width="146" height="78" rx="8" fill="#dde2ec"/>
+  <rect x="226" y="154" width="98" height="72" fill="#fff"/>
+  <rect x="252" y="161" width="46" height="5" rx="2" fill="#1b1f2a"/><rect x="258" y="169" width="34" height="3" rx="1.5" fill="#1d3f8f"/>
+  <rect x="234" y="179" width="82" height="2" fill="#1d3f8f"/>
+  <rect x="234" y="185" width="76" height="3" rx="1.5" fill="#c9ced8"/><rect x="234" y="191" width="80" height="3" rx="1.5" fill="#c9ced8"/><rect x="234" y="197" width="64" height="3" rx="1.5" fill="#c9ced8"/>
+  <rect x="234" y="206" width="82" height="2" fill="#1d3f8f"/>
+  <rect x="234" y="212" width="78" height="3" rx="1.5" fill="#c9ced8"/><rect x="234" y="218" width="70" height="3" rx="1.5" fill="#c9ced8"/>
+</svg></div>
+      </div>
+      <div class="foot" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:12px">
+        <div class="actions">
+          <a class="btn primary" href="https://cv-fit-theta.vercel.app" target="_blank" rel="noopener">Open live app <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6.5 5H11v4.5"/></svg></a>
+          <a class="btn" href="https://github.com/ishanawaz2410-dev/cv-fit" target="_blank" rel="noopener">View code <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6.5 5H11v4.5"/></svg></a>
+        </div>
+        <p class="fine">The keyword check is open to everyone. AI features use an access code to protect API costs; ask me for a demo.</p>
+      </div>
+    </section>
+    <section class="card build s-4" aria-labelledby="retail-h" style="--cc:var(--c-bi)">
+      <h3 id="retail-h">Retail Customer Intelligence</h3>
+      <span class="meta-line">BI dashboard · live · <span class="real-t">public dataset</span></span>
+      <div class="kpi"><b>$59 vs $60</b><span>average basket with vs without a discount: promos aren't growing order size</span></div>
+      <p>A four-page executive dashboard (overview, products, markets, channels) on 3,900 shopping transactions, with filters that update every page.</p>
+      <ul class="how" style="border-top:1px solid var(--border);padding-top:12px">
+        <li>Every discount and subscription in the data came from male customers; none of the 1,248 female customers used one</li>
+        <li>Flagged a data-quality issue: "Discount Applied" and "Promo Code Used" match on every row</li>
+      </ul>
+      <div class="tags"><span class="tag">KPI design</span><span class="tag">Data viz</span><span class="tag">JavaScript</span><span class="tag">Filters</span></div>
+      <div class="actions" style="margin-top:auto"><a class="btn" href="https://claude.ai/artifact/YWACGmc2WGpLp7NRCGZirq" target="_blank" rel="noopener">Open dashboard <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6.5 5H11v4.5"/></svg></a></div>
+    </section>
+
+    <!-- Case studies -->
+    <div class="sec" id="cases"><h2>Case studies</h2><span class="note">Question → method → impact · select a card for the full analysis</span></div>
+    <div id="casegrid" style="display:contents"></div>
+
+    <!-- Experience -->
+    <div class="sec" id="experience"><h2>Experience</h2><span class="note">4 roles · 2023 – 2026</span></div>
+    <section class="card s-8" aria-label="Work experience">
+      <div class="ch"><span class="label">Work history</span><span class="meta">most recent first</span></div>
+      <div class="tbl"><table class="xp">
+        <thead><tr><th>Period</th><th>Role</th><th>Impact</th></tr></thead>
+        <tbody>
+          <tr><td class="when">Jan – Jul 2026</td><td class="who"><b>Data Science &amp; AI Intern</b><span>Emirates Group · Dubai</span></td><td><div class="imp"><span class="pill acc">7d → 3 min</span><span class="pill">595K+ rows</span><span class="pill">120+ cost centres</span><span class="pill">AI roadmap</span></div></td></tr>
+          <tr><td class="when">Jun – Aug 2025</td><td class="who"><b>E-Commerce Intern</b><span>Apparel Group · UAE</span></td><td><div class="imp"><span class="pill acc">+25% engagement</span><span class="pill">SKU segmentation</span></div></td></tr>
+          <tr><td class="when">Jun – Jul 2024</td><td class="who"><b>Marketing Executive</b><span>GITCO · Saudi Arabia</span></td><td><div class="imp"><span class="pill acc">+15% campaigns</span><span class="pill">Financial reports</span></div></td></tr>
+          <tr><td class="when">Dec 2023 – Jan 2024</td><td class="who"><b>Research Analyst</b><span>Mental Health AE · UAE</span></td><td><div class="imp"><span class="pill">Global programme benchmark</span></div></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+    <section class="card s-4" aria-label="Recognition and leadership">
+      <div class="ch"><span class="label">Recognition &amp; leadership</span></div>
+      <ul class="list">
+        <li><b>VP appreciation certificate</b><span>Emirates Group · the only intern to receive it</span></li>
+        <li><b>Treasurer, then PR Manager</b><span>Business Analytics Association, AUS · 2025</span></li>
+        <li><b>Executive Director</b><span>Startup SBA, AUS · 2023 – 2024</span></li>
+        <li><b>Operations &amp; logistics</b><span>Entrepreneurship Club · AUS Model UN</span></li>
+      </ul>
+    </section>
+
+    <!-- Skills -->
+    <div class="sec" id="skills"><h2>Skills</h2><span class="note">From résumé · grouped by use</span></div>
+    <section class="card s-8" aria-label="Skills">
+      <div class="ch"><span class="label">Toolkit</span></div>
+      <dl class="skills">
+        <div><dt>Programming &amp; AI</dt><dd><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span><span class="tag">Dataiku</span><span class="tag">LangGraph</span><span class="tag">LLM APIs</span><span class="tag">RAG</span><span class="tag">Jupyter</span><span class="tag">Microsoft Foundry</span></dd></div>
+        <div><dt>Data &amp; BI</dt><dd><span class="tag">SQL / MySQL</span><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Tableau</span><span class="tag">Data cleansing</span></dd></div>
+        <div><dt>Statistics</dt><dd><span class="tag">Descriptive &amp; diagnostic</span><span class="tag">Forecasting</span><span class="tag">A/B testing</span><span class="tag">Scikit-learn</span><span class="tag">R Studio</span></dd></div>
+        <div><dt>Office</dt><dd><span class="tag">Excel · Pivot Tables</span><span class="tag">Power Query</span><span class="tag">PowerPoint</span><span class="tag">Word</span></dd></div>
+        <div><dt>Business analysis</dt><dd><span class="tag">Requirements gathering</span><span class="tag">BRDs &amp; user stories</span><span class="tag">Process mapping</span><span class="tag">Stakeholder management</span></dd></div>
+      </dl>
+    </section>
+    <section class="card s-4" aria-label="Education">
+      <div class="ch"><span class="label">Education</span><span class="meta">2022 – 2025</span></div>
+      <div><b style="font-weight:600">BSc Business Administration</b><div class="note" style="font-size:13px">Information Systems &amp; Business Analytics · American University of Sharjah</div></div>
+      <dl class="kv">
+        <div><dt>CGPA</dt><dd class="num">3.36 / 4.00</dd></div>
+        <div><dt>Honours</dt><dd>Dean's List</dd></div>
+        <div><dt>Funding</dt><dd>Merit Scholarship</dd></div>
+        <div><dt>Languages</dt><dd>English · Malayalam · Hindi</dd></div>
+      </dl>
+    </section>
+
+    <!-- Contact -->
+    <div class="sec" id="contact"><h2>Contact</h2><span class="note">Al Khobar · GMT+3</span></div>
+    <section class="card contact s-6" aria-label="Contact">
+      <h3 style="font-size:22px">Let's talk about your data.</h3>
+      <span class="live" style="font-size:12px"><i></i>Open to Business and Data Analyst roles</span>
+      <div class="email">ishanawaz2410@gmail.com</div>
+      <div class="actions">
+        <button class="btn primary copybtn" type="button" data-email="ishanawaz2410@gmail.com">Copy email</button>
+        <a class="btn" href="mailto:ishanawaz2410@gmail.com">Open mail app</a>
+        <a class="btn" href="https://www.linkedin.com/in/isha-nawaz" target="_blank" rel="noopener">LinkedIn <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11 11 5M6.5 5H11v4.5"/></svg></a>
+      </div>
+      <span class="copied" aria-live="polite"></span>
+    </section>
+    <section class="card s-3 metric" aria-label="Location"><div class="ch"><span class="label">Location</span></div><div class="v" style="font-size:24px">Al Khobar</div><div class="d">Saudi Arabia · open to roles across KSA and the UAE</div></section>
+    <a class="card s-3 metric click" href="resume.pdf" download="Fathima-Isha-Nawaz-Resume.pdf" style="text-decoration:none"><div class="ch"><span class="label">Résumé</span><span class="open">PDF ↓</span></div><div class="v" style="font-size:24px">Download CV</div><div class="d">PDF · latest version</div></a>
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 Fathima Isha Nawaz</span>
+  <span>Built with HTML, CSS &amp; JavaScript · Data in case studies is labelled real, simulated or fictional</span>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlg-title"><div class="dlg" id="dlgbody"></div></dialog>
+
+<script>
+const TYPES={AI:{label:"AI agents",color:"--c-ai"},BI:{label:"BI & dashboards",color:"--c-bi"},AN:{label:"Data analysis",color:"--c-an"},RS:{label:"Business analysis",color:"--c-rs"}};
+
+const PROJECTS=[
+ {id:"ci",code:"CIA",type:"AI",title:"Competitive Intelligence Agent",org:"Emirates Group · 2026",
+  tools:["Python","Pandas","Dataiku","LLM APIs"],
+  problem:"Spotting competitor moves across the network meant manually scanning huge flight schedule files.",
+  built:"An end-to-end agentic AI system in Dataiku that processes 595K+ rows of OAG schedule data to detect new route entrants, capacity surges and market share shifts, ranks threats into Critical, Alert, Watch and Monitor tiers, and writes branded PowerPoint reports with LLM-driven narrative.",
+  impact:"595K+ rows · 7 days → 3 min",chart:"tiers"},
+ {id:"rr",code:"RRA",type:"AI",title:"Route Review Agent",org:"Emirates Group · 2026",
+  tools:["Python","Pandas","Dataiku","LLM APIs"],
+  problem:"Route reviews took about a week of pulling data from several systems and writing slides by hand.",
+  built:"An end-to-end agentic AI system that ingests capacity, MIDT, CBI and fares data, generates the narrative analysis with an LLM and outputs a branded multi-slide PowerPoint report.",
+  impact:"7 days → 3 min",chart:"speed"},
+ {id:"tk",code:"TKT",type:"AN",title:"Ticketing & Booking Behaviour Analysis",org:"Emirates Group · 2026",
+  tools:["Python","Pandas","NumPy","Excel"],
+  problem:"Understand how customers book across channels to find revenue opportunities.",
+  built:"Cleansed and analysed ticketing data with Python and Excel Pivot Tables across booking channels (EOL, Online, Trade), coupon usage and flight distance segments, then surfaced actionable revenue insights.",
+  impact:"Customer booking insights",chart:"channels"},
+ {id:"rm",code:"RDM",type:"RS",title:"AI Agent Roadmap Workshop",org:"Emirates Group · 2026",
+  tools:["Requirements gathering","Stakeholder management"],
+  problem:"Teams had analytics pain points but no shared plan for where AI agents could help.",
+  built:"Led a cross-functional ideation session with the Data Science and Route Planning teams, turning four business pain points (manual analytics, data silos, reactive monitoring, data trust) into a structured AI agent roadmap.",
+  impact:"4 pain points → 1 roadmap",chart:null},
+ {id:"sa",code:"SAL",type:"RS",title:"AI Platform Onboarding",org:"Emirates Group · 2026",
+  tools:["ServiceNow","Process improvement"],
+  problem:"Onboarding cost centres onto Sally, an internal AI platform, was stuck in a slow ServiceNow workflow.",
+  built:"Worked with IT to consolidate multiple requests into one streamlined flow, unblocking onboarding for 120+ cost centres.",
+  impact:"120+ cost centres onboarded",chart:null},
+ {id:"ap",code:"APG",type:"AN",title:"SKU Sales Segmentation",org:"Apparel Group · 2025",
+  tools:["Excel","Trendyol"],
+  problem:"Know which products to push, reprice or restock on the e-commerce channel.",
+  built:"Segmented SKU-level sales data with Excel Pivot Tables to find top performers, guiding pricing and inventory decisions. Managed listings and pricing on Trendyol and designed marketing assets.",
+  impact:"+25% social engagement",chart:null},
+ {id:"gt",code:"GIT",type:"AN",title:"Campaign & Product Performance",org:"GITCO, Saudi Arabia · 2024",
+  tools:["Excel"],
+  problem:"Make marketing campaigns more targeted using product and customer data.",
+  built:"Analysed product performance and customer preference data in Excel to sharpen targeting. Prepared financial reports and managed inter-division fund transfers for procurement.",
+  impact:"+15% campaign effectiveness",chart:null},
+ {id:"sw",code:"SWG",type:"AN",title:"Swiggy Performance Analysis",org:"AUS · Coursework",
+  tools:["Excel","Power Query","Power BI","Tableau","Forecasting"],
+  problem:"Explain what drives a food delivery platform's performance and plan toward a revenue target.",
+  built:"Analysed a 300,000+ row, 4-table dataset with Power Query and Pivot Tables, covering descriptive, diagnostic, predictive (seasonality forecast) and prescriptive analysis, including Goal Seek planning toward an INR 100M revenue target.",
+  impact:"300K+ rows · INR 100M plan",chart:"season"},
+ {id:"av",code:"AVN",type:"BI",title:"Aviation Performance Dashboards",org:"Self-initiated",
+  tools:["Power BI","DAX"],
+  problem:"Track airline operational performance and route trends in one place.",
+  built:"Two interactive Power BI dashboards using DAX (CALCULATE, time intelligence, RANKX, YoY variance) for operational performance and route trends.",
+  impact:"2 interactive dashboards",chart:"otp"},
+ {id:"db",code:"SDB",type:"AN",title:"Sustainability Database Redesign",org:"AUS · Sustainability Club",
+  tools:["SQL","MySQL"],
+  problem:"The club's budget and project records were hard to keep accurate and report on.",
+  built:"Designed a normalised 13-entity MySQL database with triggers, stored procedures and 10+ SQL queries to protect data integrity and support budget and project reporting.",
+  impact:"13 entities · 10+ queries",chart:null},
+ {id:"mh",code:"MHA",type:"RS",title:"Youth Programme Benchmarking",org:"Mental Health AE · 2023–24",
+  tools:["Research","Benchmarking"],
+  problem:"Shape the organisation's strategy using what works elsewhere.",
+  built:"Benchmarked global youth mental health programmes to identify best practices and gaps for the organisation's strategy.",
+  impact:"Strategy input",chart:null}
+];
+
+const STOPS=[
+ {code:"AUS",t:"American University of Sharjah",s:"Jan 2022 – Dec 2025",
+  items:["BSc Business Administration, Information Systems & Business Analytics","CGPA 3.36/4.00 · Dean's List · Merit Scholarship","Business Analytics Association: Treasurer and PR Manager","Startup SBA: Executive Director, then Executive Assistant"]},
+ {code:"MHA",t:"Mental Health AE",s:"Dec 2023 – Jan 2024",items:["Research Analyst","Benchmarked global youth mental health programmes for the organisation's strategy"]},
+ {code:"GIT",t:"GITCO",s:"Jun – Jul 2024",items:["Marketing Executive, Saudi Arabia","Excel analysis of product and customer data improved campaign effectiveness by 15%","Prepared financial reports and managed inter-division fund transfers"]},
+ {code:"APG",t:"Apparel Group",s:"Jun – Aug 2025",items:["E-Commerce Intern","SKU-level sales segmentation guiding pricing and inventory","Managed Trendyol listings and pricing; marketing assets lifted social engagement 25%"]},
+ {code:"EK",t:"Emirates Group",s:"Jan – Jul 2026",
+  items:["Data Science & AI Intern","Built two agentic AI systems that cut analyst turnaround from 7 days to 3 minutes","Analysed ticketing data across booking channels for revenue insights","Led an AI agent roadmap session; onboarded 120+ cost centres onto an internal AI platform","VP appreciation certificate, the only intern to receive it"]},
+ {code:"Now",t:"Next role",s:"Open now",now:true,
+  items:["Looking for Business Analyst and Data Analyst roles","Based in Al Khobar; open to Saudi Arabia and the UAE"]}
+];
+const CASE_DATA={"r1": {"cleaning_log": [["Raw rows", 541909], ["After removing rows with no customer ID", 406829], ["After removing cancelled invoices", 397924], ["After removing zero/negative quantity or price", 397884], ["After removing exact duplicates", 392692]], "orders": 18532, "customers": 4338, "funnel": [{"stage": "Order 1", "customers": 4338, "pct_of_start": 100.0, "drop_from_prev": null}, {"stage": "Order 2", "customers": 2845, "pct_of_start": 65.6, "drop_from_prev": 34.4}, {"stage": "Order 3", "customers": 2010, "pct_of_start": 46.3, "drop_from_prev": 29.3}, {"stage": "Order 5", "customers": 1114, "pct_of_start": 25.7, "drop_from_prev": 44.6}, {"stage": "Order 10", "customers": 391, "pct_of_start": 9.0, "drop_from_prev": 64.9}], "median_days_to_second": 50.11666666669771, "second_within_30_pct": 33.6, "second_within_90_pct": 67.7, "split": [{"customer_type": "One-time", "customers": 1493, "revenue": 613990.0, "rev_share": 6.9, "cust_share": 34.4}, {"customer_type": "Repeat", "customers": 2845, "revenue": 8273219.0, "rev_share": 93.1, "cust_share": 65.6}], "avg_month1_retention_2011": 19.0, "scenario": {"converted_customers": 149, "median_repeat_rev": 1154.0, "median_one_time_rev": 256.0, "est_uplift_gbp": 133885.0}}, "r2": {"customers": 4338, "silhouette": {"2": 0.433, "3": 0.337, "4": 0.338, "5": 0.316, "6": 0.312}, "k": 4, "segments": [{"segment": "Champions", "customers": 713, "cust_share": 16.4, "rev_share": 64.9, "recency": 8.0, "frequency": 10.0, "monetary": 3722.8, "action": "VIP early access and referral programme; protect, don't discount"}, {"segment": "Loyal regulars", "customers": 1166, "cust_share": 26.9, "rev_share": 23.6, "recency": 57.0, "frequency": 4.0, "monetary": 1345.2, "action": "Bundles and cross-sell to raise basket size toward Champion level"}, {"segment": "Promising newcomers", "customers": 837, "cust_share": 19.3, "rev_share": 5.2, "recency": 17.0, "frequency": 2.0, "monetary": 480.3, "action": "Nurture toward a 3rd order: personalised picks within 30-60 days of the last purchase"}, {"segment": "Lapsed one-timers", "customers": 1622, "cust_share": 37.4, "rev_share": 6.2, "recency": 174.5, "frequency": 1.0, "monetary": 296.1, "action": "Low-cost win-back email; stop paid retargeting if no response"}]}, "r3": {"n_per_group": 10000, "power_for_3.0_to_3.7pct": 0.79, "summary": [{"group": "A", "recipients": 10000, "orders": 268, "conv_rate": 2.68, "rev_per_email": 6.53, "profit_per_email": 2.94}, {"group": "B", "recipients": 10000, "orders": 421, "conv_rate": 4.21, "rev_per_email": 8.53, "profit_per_email": 3.01}, {"group": "C", "recipients": 10000, "orders": 395, "conv_rate": 3.95, "rev_per_email": 9.94, "profit_per_email": 3.76}], "chi2_p": 0.0, "conv_p_vs_A": {"B": 0.0, "C": 0.0}, "anova_revenue_p": 0.0, "anova_profit_p": 0.00394, "tukey_profit": {"A-B": {"diff": 0.074, "p": 0.9605, "significant": false}, "A-C": {"diff": 0.824, "p": 0.0074, "significant": true}, "B-C": {"diff": 0.75, "p": 0.0171, "significant": true}}, "profit_lift_vs_A_pct": {"B": 2.4, "C": 27.9}, "profit_per_100k_emails_SAR": {"A": 294000.0, "B": 301000.0, "C": 376000.0}}, "r4": {"as_is": {"hours": 376, "days": 15.7, "manual_handoffs": 6, "steps": 9}, "to_be": {"hours": 144.1, "days": 6.0, "manual_handoffs": 1, "steps": 7}, "cycle_time_reduction_pct": 62.0, "internal_hours_as_is": 256, "internal_hours_to_be": 24.1, "as_is_steps": [["Customer emails a return request", "Customer", 0, false], ["Agent reads email from shared inbox", "Customer service", 24, true], ["Agent checks order in OMS, asks for photos", "Customer service", 48, true], ["Agent creates and emails a courier label", "Customer service", 4, true], ["Courier collects parcel", "Courier", 48, false], ["Warehouse receives, inspects, logs in spreadsheet", "Warehouse", 72, true], ["Spreadsheet sent to finance in a weekly batch", "Warehouse", 84, true], ["Finance checks and approves refund manually", "Finance", 24, true], ["Payment gateway returns money to card", "Payment gateway", 72, false]], "to_be_steps": [["Customer starts return in self-service portal", "Customer", 0, false], ["Rules engine checks eligibility, issues label instantly", "System", 0.1, false], ["Courier collects parcel", "Courier", 48, false], ["Warehouse scans and inspects; status updates automatically", "Warehouse", 24, true], ["Refund auto-approved if inspection passes and item < SAR 500", "System", 0, false], ["Finance reviews exceptions only (~10% of returns)", "Finance", 0, false], ["Payment gateway returns money to card", "Payment gateway", 72, false]]}};
+const WIREFRAME="<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 360 520\" font-family=\"Arial, sans-serif\" font-size=\"12\">\n  <rect width=\"360\" height=\"520\" rx=\"20\" fill=\"#fff\" stroke=\"#333\" stroke-width=\"2\"/>\n  <text x=\"20\" y=\"40\" font-size=\"16\" font-weight=\"bold\" fill=\"#222\">Stock search</text>\n  <rect x=\"20\" y=\"56\" width=\"320\" height=\"38\" rx=\"8\" fill=\"#f3f3f3\" stroke=\"#999\"/><text x=\"34\" y=\"80\" fill=\"#666\">Scan or type SKU\u2026 DT-1043 Linen abaya</text>\n  <text x=\"20\" y=\"124\" font-weight=\"bold\" fill=\"#222\">Stock by location</text>\n  <g fill=\"#222\"><text x=\"20\" y=\"150\">Location</text><text x=\"170\" y=\"150\">S</text><text x=\"210\" y=\"150\">M</text><text x=\"250\" y=\"150\">L</text><text x=\"290\" y=\"150\">XL</text></g>\n  <line x1=\"20\" y1=\"158\" x2=\"340\" y2=\"158\" stroke=\"#ccc\"/>\n  <g fill=\"#333\"><text x=\"20\" y=\"182\">Warehouse</text><text x=\"170\" y=\"182\">12</text><text x=\"210\" y=\"182\">8</text><text x=\"250\" y=\"182\">0</text><text x=\"290\" y=\"182\">3</text>\n  <text x=\"20\" y=\"210\">Al Khobar (you)</text><text x=\"170\" y=\"210\">1</text><text x=\"210\" y=\"210\">0</text><text x=\"250\" y=\"210\">0</text><text x=\"290\" y=\"210\">2</text>\n  <text x=\"20\" y=\"238\">Riyadh</text><text x=\"170\" y=\"238\">4</text><text x=\"210\" y=\"238\">2</text><text x=\"250\" y=\"238\">1</text><text x=\"290\" y=\"238\">0</text>\n  <text x=\"20\" y=\"266\">Jeddah</text><text x=\"170\" y=\"266\">0</text><text x=\"210\" y=\"266\">5</text><text x=\"250\" y=\"266\">2</text><text x=\"290\" y=\"266\">1</text></g>\n  <rect x=\"20\" y=\"290\" width=\"320\" height=\"54\" rx=\"8\" fill=\"#fff4e5\" stroke=\"#d48a2c\"/><text x=\"34\" y=\"312\" fill=\"#8a5410\">Size M is out of stock here.</text><text x=\"34\" y=\"332\" fill=\"#8a5410\">Jeddah has 5, Riyadh has 2.</text>\n  <rect x=\"20\" y=\"364\" width=\"320\" height=\"44\" rx=\"22\" fill=\"#222\"/><text x=\"180\" y=\"391\" fill=\"#fff\" text-anchor=\"middle\" font-weight=\"bold\">Request transfer from Jeddah</text>\n  <rect x=\"20\" y=\"420\" width=\"320\" height=\"44\" rx=\"22\" fill=\"#fff\" stroke=\"#222\"/><text x=\"180\" y=\"447\" fill=\"#222\" text-anchor=\"middle\">Order online for customer</text>\n  <text x=\"180\" y=\"496\" fill=\"#999\" text-anchor=\"middle\" font-size=\"10\">Low-fidelity wireframe \u00b7 UC-2 / UC-3 \u00b7 US-02, US-03</text>\n</svg>\n";
+
+const CASES=[
+ {id:"c1",kind:"Data analysis",type:"AN",src:"Real public data",real:true,wide:true,
+  q:"Where do customers drop off after their first order?",ans:"34%",ansNote:"of customers never place a second order, yet repeat buyers bring 93% of revenue",
+  tools:["SQL","Window functions","Python","Pandas"]},
+ {id:"c2",kind:"Data analysis",type:"AN",src:"Real public data",real:true,wide:true,
+  q:"Which customers should marketing treat differently?",ans:"16%",ansNote:"of customers (Champions) generate 65% of revenue",
+  tools:["Python","RFM","K-means","scikit-learn"]},
+ {id:"c3",kind:"Experimentation",type:"AI",src:"Simulated data",
+  q:"Discount or free delivery: which promo earns more?",ans:"+28%",ansNote:"profit per email for free delivery; the 15% discount added none",
+  tools:["A/B testing","Chi-square","ANOVA","Tukey HSD"]},
+ {id:"c4",kind:"Business analysis",type:"RS",src:"Fictional case",
+  q:"How do we cut refund time for a fashion e-tailer?",ans:"−62%",ansNote:"request-to-refund time in the redesigned process (modelled)",
+  tools:["Process mapping","5 whys","RACI"]},
+ {id:"c5",kind:"Business analysis",type:"BI",src:"Fictional case",
+  q:"What should an inventory visibility system actually do?",ans:"9 + 5",ansNote:"prioritised requirements and non-functional requirements, traced to user stories",
+  tools:["BRD","User stories","Use cases","Wireframe"]}
+];
+const fmt=n=>Number(n).toLocaleString("en-US");
+function hbars(rows,{max,fmtv=v=>v,lab=110,w=520,color,hi=-1,unit=""}){
+  const bw=w-lab-70,h=rows.length*30+6,mut=css("--muted"),ink=css("--ink");
+  return `<svg viewBox="0 0 ${w} ${h}" role="img">${rows.map((r,i)=>`<text x="0" y="${i*30+19}" font-family="Inter, system-ui, sans-serif" font-size="12.5" fill="${ink}">${r[0]}</text>
+    <rect x="${lab}" y="${i*30+5}" width="${Math.max(2,r[1]/max*bw)}" height="20" rx="4" fill="${i===hi?css("--light"):color}" opacity="${i===hi||hi<0?1:.75}"/>
+    <text x="${lab+Math.max(2,r[1]/max*bw)+6}" y="${i*30+19}" font-family="JetBrains Mono, monospace" font-size="11" fill="${mut}">${fmtv(r[1])}${unit}</text>`).join("")}</svg>`;
+}
+function stack100(rows,keys,colors){
+  const w=520,lab=120,bw=w-lab-10,mut=css("--muted"),ink=css("--ink");
+  return `<svg viewBox="0 0 ${w} 96" role="img">${rows.map((r,i)=>{let x=lab;return `<text x="0" y="${i*44+24}" font-family="Inter, system-ui, sans-serif" font-size="12.5" fill="${ink}">${r.label}</text>`+r.vals.map((v,j)=>{const ww=v/100*bw,o=`<rect x="${x}" y="${i*44+8}" width="${ww}" height="26" fill="${colors[j]}"/>${ww>34?`<text x="${x+ww/2}" y="${i*44+25}" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10.5" fill="#0A140E">${Math.round(v)}%</text>`:""}`;x+=ww;return o;}).join("")}).join("")}</svg>
+  <div class="legend" style="margin-top:6px">${keys.map((k,j)=>`<span><i style="background:${colors[j]}"></i>${k}</span>`).join("")}</div>`;
+}
+function caseBody(id){
+  const D=CASE_DATA,g=css("--glow"),s=css("--streak"),a=css("--c-bi"),r=css("--c-rs"),l=css("--light");
+  if(id==="c1"){const d=D.r1,f=d.funnel,one=d.split.find(x=>x.customer_type==="One-time"),rep=d.split.find(x=>x.customer_type==="Repeat");
+    return `<div><h4>The question</h4><p>An online retailer gets plenty of first orders. Where exactly do customers stop coming back, and when is the best moment to win them back?</p></div>
+    <div class="two"><div><h4>Data &amp; cleaning</h4><p>UCI Online Retail: a real UK online gift retailer, Dec 2010 to Dec 2011.</p><div class="tbl"><table>${d.cleaning_log.map(x=>`<tr><td>${x[0]}</td><td class="n">${fmt(x[1])}</td></tr>`).join("")}</table></div><p class="note" style="margin-top:6px">${fmt(d.orders)} orders from ${fmt(d.customers)} customers after cleaning.</p></div>
+    <div><h4>Method</h4><ul><li>Loaded orders into SQLite and wrote the analysis in SQL</li><li>Repeat-purchase funnel with conditional counts</li><li>Days to second order with <code>ROW_NUMBER()</code> window function</li><li>Monthly cohort retention table</li><li>Revenue split: one-time vs repeat customers</li></ul></div></div>
+    <div><h4>What I found</h4><p class="note" style="margin-bottom:8px">Customers reaching each order count</p>${hbars(f.map(x=>["Order "+x.stage.split(" ")[1],x.customers]),{max:f[0].customers,fmtv:fmt,color:s,hi:1})}
+    <ul style="margin-top:10px"><li><b>34% of customers never order again.</b> The step from order 1 to order 2 is the biggest single drop.</li><li>One-time buyers are ${one.cust_share}% of customers but only ${one.rev_share}% of revenue; repeat buyers bring ${rep.rev_share}%.</li><li>The median second order comes ${Math.round(d.median_days_to_second)} days after the first; ${d.second_within_90_pct}% of second orders happen within 90 days.</li><li>Only about ${Math.round(d.avg_month1_retention_2011)}% of each 2011 cohort orders again the next month.</li></ul></div>
+    <div><h4>Recommendation</h4><p>Build a post-purchase journey that lands in the 30 to 60 day window, when second orders naturally happen: a personalised "you might like" email at day 30 and a small incentive at day 60 for anyone who hasn't returned.</p></div>
+    <div class="impact-row"><div><b>£${fmt(d.scenario.est_uplift_gbp)}</b><span>estimated extra revenue if 10% of one-time buyers (${d.scenario.converted_customers}) became repeat buyers</span></div><div><b>${Math.round(d.median_days_to_second)} days</b><span>median time to second order, the timing for the journey</span></div><div><b>93%</b><span>of revenue comes from repeat customers</span></div></div>
+    <p class="note">Scenario uses median revenue of repeat (£${fmt(d.scenario.median_repeat_rev)}) vs one-time (£${fmt(d.scenario.median_one_time_rev)}) customers. Tools: SQL (SQLite), Python, Pandas.</p>`;}
+  if(id==="c2"){const d=D.r2,cols=[l,g,s,a];
+    return `<div><h4>The question</h4><p>Marketing sends the same emails to everyone. Which groups of customers behave differently, and what should we do for each?</p></div>
+    <div class="two"><div><h4>Data</h4><p>The same cleaned UCI Online Retail data: ${fmt(d.customers)} customers. For each one I calculated recency (days since last order), frequency (orders) and monetary value (total spend).</p></div>
+    <div><h4>Method</h4><ul><li>Rule-based RFM scores (quintiles) as a baseline</li><li>Log-transformed and scaled R, F and M</li><li>K-means clustering; compared k = 2 to 6 with silhouette scores</li><li>Chose k = 4: k = 3 and 4 scored the same (0.34), and 4 gives marketing more usable groups</li></ul></div></div>
+    <div><h4>What I found</h4>${stack100([{label:"Customers",vals:d.segments.map(x=>x.cust_share)},{label:"Revenue",vals:d.segments.map(x=>x.rev_share)}],d.segments.map(x=>x.segment),cols)}</div>
+    <div class="tbl"><table><tr><th>Segment</th><th>Customers</th><th>Last order</th><th>Orders</th><th>Spend</th><th>Action</th></tr>${d.segments.map(x=>`<tr><td><b>${x.segment}</b></td><td class="n">${fmt(x.customers)}</td><td class="n">${Math.round(x.recency)} days</td><td class="n">${x.frequency}</td><td class="n">£${fmt(Math.round(x.monetary))}</td><td>${x.action}</td></tr>`).join("")}</table></div>
+    <p class="note">Medians per segment. Tools: Python, Pandas, scikit-learn.</p>
+    <div class="impact-row"><div><b>16% → 65%</b><span>Champions' share of customers vs share of revenue</span></div><div><b>37%</b><span>of customers are lapsed one-timers worth only 6% of revenue</span></div><div><b>4</b><span>segments, each with a clear action and owner</span></div></div>`;}
+  if(id==="c3"){const d=D.r3,S=d.summary,cols=[css("--muted"),a,g];
+    return `<div><h4>The question</h4><p>A Gulf fashion e-tailer (fictional) wants to know which promo email to send: a 15% discount or free delivery. The real question is which one makes more <em>profit</em> per email, not just more orders.</p></div>
+    <div class="two"><div><h4>Experiment design</h4><ul><li>${fmt(d.n_per_group*3)} customers randomly split into three groups of ${fmt(d.n_per_group)}</li><li>A: new arrivals (control) · B: 15% off · C: free delivery</li><li>Power check first: ${fmt(d.n_per_group)} per group gives ${Math.round(d["power_for_3.0_to_3.7pct"]*100)}% power to detect a 3.0% → 3.7% lift</li><li>Profit counts the discount, a 45% margin and SAR 18 delivery cost</li></ul></div>
+    <div><h4>Method</h4><ul><li>Chi-square test on conversion rates</li><li>One-way ANOVA on profit per email</li><li>Tukey HSD to compare each pair of groups</li></ul><p class="note" style="margin-top:6px">Data is simulated so the full design can be shown end to end.</p></div></div>
+    <div class="two"><div><h4>Conversion rate</h4>${hbars(S.map(x=>[x.group==="A"?"A · Control":x.group==="B"?"B · 15% off":"C · Free delivery",x.conv_rate]),{max:5,color:s,unit:"%",fmtv:v=>v.toFixed(2),lab:120})}</div>
+    <div><h4>Profit per email (SAR)</h4>${hbars(S.map(x=>[x.group==="A"?"A · Control":x.group==="B"?"B · 15% off":"C · Free delivery",x.profit_per_email]),{max:4.5,color:a,hi:2,fmtv:v=>v.toFixed(2),lab:120})}</div></div>
+    <div><h4>What I found</h4><ul><li>Both offers lift conversion (chi-square p &lt; 0.001). The discount converts best: ${S[1].conv_rate}% vs ${S[0].conv_rate}%.</li><li>But the discount gives the margin away: its profit per email is no different from the control (Tukey p = ${d.tukey_profit["A-B"].p.toFixed(2)}).</li><li>Free delivery earns ${d.profit_lift_vs_A_pct.C}% more profit per email than the control (p = ${d.tukey_profit["A-C"].p.toFixed(3)}) and beats the discount (p = ${d.tukey_profit["B-C"].p.toFixed(3)}).</li></ul></div>
+    <div><h4>Recommendation</h4><p>Roll out free delivery as the default promo, keep discounts for clearance only, and re-test with a minimum basket value for free delivery.</p></div>
+    <div class="impact-row"><div><b>+${d.profit_lift_vs_A_pct.C}%</b><span>profit per email, free delivery vs control</span></div><div><b>SAR ${fmt(d.profit_per_100k_emails_SAR.C-d.profit_per_100k_emails_SAR.B)}</b><span>more profit per 100,000 emails than the discount</span></div><div><b>${Math.round(d["power_for_3.0_to_3.7pct"]*100)}%</b><span>statistical power planned before launch</span></div></div>
+    <p class="note">Tools: Python, SciPy, statsmodels.</p>`;}
+  if(id==="c4"){const d=D.r4;
+    return `<div><h4>The question</h4><p>Customers of Dune &amp; Thread, a fictional Gulf fashion e-tailer, wait more than two weeks for refunds, and it's the top reason for 1-star reviews. Where is the time going, and what should change?</p></div>
+    <div class="two"><div><h4>As-is (${d.as_is.steps} steps, ${d.as_is.manual_handoffs} manual handoffs)</h4><ul><li>Customer emails a request; agent reads the shared inbox</li><li>Agent checks the order system and asks for photos</li><li>Agent emails a courier label by hand</li><li>Warehouse inspects and logs in a spreadsheet</li><li>Spreadsheet goes to finance in a weekly batch</li><li>Finance approves every refund manually</li></ul></div>
+    <div><h4>Root cause (5 whys)</h4><p>Returns sit outside the order management system, in email and Excel. So every step needs a person to move information, and finance only sees returns once a week.</p></div></div>
+    <div><h4>Request-to-refund time (days)</h4>${hbars([["As-is",d.as_is.days],["To-be",d.to_be.days]],{max:16,color:r,hi:1,fmtv:v=>v.toFixed(1),unit:" days",lab:70})}</div>
+    <div class="two"><div><h4>To-be design</h4><ul><li>Self-service return portal with eligibility rules and instant labels</li><li>Warehouse scanning updates status automatically</li><li>Refunds under SAR 500 that pass inspection are auto-approved</li><li>Finance reviews exceptions only (about 10%)</li></ul></div>
+    <div><h4>RACI (excerpt)</h4><div class="tbl"><table><tr><th>Activity</th><th>R</th><th>A</th></tr><tr><td>Eligibility rules</td><td>E-com manager</td><td>E-com manager</td></tr><tr><td>Portal &amp; rules engine</td><td>IT</td><td>E-com manager</td></tr><tr><td>Inspection standard</td><td>Warehouse</td><td>E-com manager</td></tr><tr><td>Auto-refund threshold</td><td>Finance</td><td>E-com manager</td></tr></table></div></div></div>
+    <div class="impact-row"><div><b>−${d.cycle_time_reduction_pct}%</b><span>request-to-refund time, ${d.as_is.days} → ${d.to_be.days} days</span></div><div><b>${d.internal_hours_as_is}h → ${Math.round(d.internal_hours_to_be)}h</b><span>time inside the company's control</span></div><div><b>${d.as_is.manual_handoffs} → ${d.to_be.manual_handoffs}</b><span>manual handoffs</span></div></div>
+    <p class="note">Practice case with stated step-time assumptions; the full write-up includes as-is and to-be process flows.</p>`;}
+  if(id==="c5"){
+    return `<div><h4>The question</h4><p>Dune &amp; Thread (fictional) sells online and in 3 stores, but stock lives in separate spreadsheets updated once a day. The website oversells and stores can't see each other's stock. What should a new system do, and how will we know it worked?</p></div>
+    <div><h4>Business objectives</h4><div class="tbl"><table><tr><th>ID</th><th>Objective</th><th>Measure of success</th></tr>
+      <tr><td class="n">BO-1</td><td>Stop selling items we don't have</td><td>Oversold orders below 0.5% (from ~4%)</td></tr>
+      <tr><td class="n">BO-2</td><td>Let any store find stock in another branch</td><td>Transfer request in under 2 minutes</td></tr>
+      <tr><td class="n">BO-3</td><td>Reorder before stock runs out</td><td>Stock-outs on top-100 SKUs down 50%</td></tr>
+      <tr><td class="n">BO-4</td><td>Remove manual spreadsheet work</td><td>10+ staff hours saved per week</td></tr></table></div></div>
+    <div class="two"><div><h4>Requirements (MoSCoW)</h4><ul><li><b>Must:</b> live stock per SKU and location; website marks out-of-stock within 1 minute; cross-branch search; low-stock alerts; audit log</li><li><b>Should:</b> inter-store transfers; reorder suggestions; Excel exports</li><li><b>Could:</b> manager dashboard</li><li><b>Non-functional:</b> 60-second sync, 99.5% uptime, role-based access, Arabic and English</li></ul>
+      <h4 style="margin-top:14px">User story</h4><div class="story"><b>US-02 · Find stock in another branch</b><br>As a store associate, I want to search a SKU and see stock in every location, so that I can still make the sale.<br><span class="note">Given I scan a SKU, when results load, then I see quantity by size for all locations in under 3 seconds.</span></div></div>
+    <div><h4>Wireframe</h4><div class="wire">${WIREFRAME}</div></div></div>
+    <div class="impact-row"><div><b>4</b><span>measurable business objectives</span></div><div><b>9 + 5</b><span>functional and non-functional requirements</span></div><div><b>5</b><span>user stories with acceptance criteria, plus use case matrix and RACI</span></div></div>
+    <p class="note">Full package: BRD, user stories, use case matrix, RACI and wireframe.</p>`;}
+}
+function openCase(id){
+  const c=CASES.find(x=>x.id===id);
+  $("dlg").classList.add("wide");
+  $("dlgbody").innerHTML=`<div class="dlg-head"><div><h3 id="dlg-title">${c.q}</h3><div class="meta-line" style="margin-top:8px">${c.kind} · ${c.src}</div></div><button class="x" type="button" id="close" aria-label="Close"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div><div class="cs">${caseBody(id)}</div>`;
+  $("close").onclick=()=>$("dlg").close();
+  $("dlg").showModal();
+}
+document.getElementById("dlg").addEventListener("close",e=>e.target.classList.remove("wide"));
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $=id=>document.getElementById(id);
+
+/* Tech stack marquee */
+const STACK=[["Python","--c-an"],["SQL","--c-an"],["Power BI","--c-bi"],["DAX","--c-bi"],["Tableau","--c-bi"],["Excel","--c-bi"],["Power Query","--c-bi"],["Pandas","--c-an"],["NumPy","--c-an"],["Scikit-learn","--c-an"],["Dataiku","--c-ai"],["LangGraph","--c-ai"],["LLM APIs","--c-ai"],["RAG","--c-ai"],["Microsoft Foundry","--c-ai"],["Jupyter","--c-an"],["R Studio","--c-an"],["MySQL","--c-an"],["BRDs","--c-rs"],["User stories","--c-rs"],["Process mapping","--c-rs"]];
+(function(){
+  const row=STACK.map(([t,c])=>`<span class="tool" style="--tc:var(${c})"><i></i>${t}</span>`).join("");
+  $("marquee").innerHTML=`<div class="track">${row}</div><div class="track" aria-hidden="true">${row}</div>`;
+})();
+
+/* Case cards with mini charts */
+function vizFor(id){
+  const D=CASE_DATA,W=(id==="c1"||id==="c2")?560:320,mut=css("--faint"),bd=css("--border-2"),acc=css("--accent");
+  const t=(x,y,s,a="start")=>`<text x="${x}" y="${y}" font-family="JetBrains Mono, monospace" font-size="9.5" fill="${mut}" text-anchor="${a}">${s}</text>`;
+  if(id==="c1"){const f=D.r1.funnel,mx=f[0].customers,bw=W/f.length;
+    return `<svg viewBox="0 0 ${W} 74" role="img" aria-label="Customers reaching each order count">${f.map((r,i)=>{const h=r.customers/mx*54;return `<rect x="${i*bw+4}" y="${58-h}" width="${bw-8}" height="${h}" rx="2" fill="${i===1?acc:bd}"/>${t(i*bw+bw/2,71,r.stage.replace("Order ","#"),"middle")}`}).join("")}</svg>`;}
+  if(id==="c2"){const s=D.r2.segments,cols=[acc,css("--blue"),css("--violet"),bd];let x1=0,x2=0;
+    return `<svg viewBox="0 0 ${W} 62" role="img" aria-label="Share of customers versus share of revenue by segment">${t(0,10,"CUSTOMERS")}${s.map((r,i)=>{const w=r.cust_share/100*W,o=`<rect x="${x1}" y="14" width="${Math.max(0,w-2)}" height="12" rx="2" fill="${cols[i]}"/>`;x1+=w;return o}).join("")}${t(0,44,"REVENUE")}${s.map((r,i)=>{const w=r.rev_share/100*W,o=`<rect x="${x2}" y="48" width="${Math.max(0,w-2)}" height="12" rx="2" fill="${cols[i]}"/>`;x2+=w;return o}).join("")}</svg>`;}
+  if(id==="c3"){const s=D.r3.summary,mx=4.2,lab={A:"Control",B:"15% off",C:"Free delivery"};
+    return `<svg viewBox="0 0 ${W} 72" role="img" aria-label="Profit per email by group">${s.map((r,i)=>{const w=r.profit_per_email/mx*(W-150);return `${t(0,i*23+13,lab[r.group].toUpperCase())}<rect x="100" y="${i*23+4}" width="${w}" height="12" rx="2" fill="${r.group==="C"?acc:bd}"/>${t(106+w,i*23+13,"SAR "+r.profit_per_email.toFixed(2))}`}).join("")}</svg>`;}
+  if(id==="c4"){const a=D.r4.as_is.days,b=D.r4.to_be.days,mx=16;
+    return `<svg viewBox="0 0 ${W} 50" role="img" aria-label="Refund time before and after">${t(0,13,"AS-IS")}<rect x="60" y="4" width="${a/mx*(W-120)}" height="12" rx="2" fill="${bd}"/>${t(66+a/mx*(W-120),13,a+" d")}${t(0,38,"TO-BE")}<rect x="60" y="29" width="${b/mx*(W-120)}" height="12" rx="2" fill="${acc}"/>${t(66+b/mx*(W-120),38,b+" d")}</svg>`;}
+  if(id==="c5"){const m=[["MUST",5],["SHOULD",3],["COULD",1]];
+    return `<svg viewBox="0 0 ${W} 72" role="img" aria-label="Requirements by priority">${m.map((r,i)=>`${t(0,i*23+13,r[0])}${Array.from({length:r[1]},(_,k)=>`<rect x="${64+k*22}" y="${i*23+4}" width="18" height="12" rx="2" fill="${i===0?acc:bd}"/>`).join("")}`).join("")}${t(W,13,"FR-01…09","end")}</svg>`;}
+  return "";
+}
+function renderBento(){
+  const span={c1:"s-6",c2:"s-6",c3:"s-4",c4:"s-4",c5:"s-4"};
+  $("casegrid").innerHTML=CASES.map(c=>`<button class="card click case ${span[c.id]}" type="button" data-id="${c.id}" style="--cc:var(${TYPES[c.type].color})">
+    <span class="q">${c.q}</span>
+    <span class="meta-line">${c.kind} · <span class="${c.real?"real-t":""}">${c.src}</span></span>
+    <span class="kpi"><b>${c.ans}</b><span>${c.ansNote}</span></span>
+    <span class="viz">${vizFor(c.id)}</span>
+    <span class="foot"><span class="tags">${c.tools.map(t=>`<span class="tag">${t}</span>`).join("")}</span><span class="open">Open analysis →</span></span>
+  </button>`).join("");
+  $("casegrid").querySelectorAll(".case").forEach(b=>b.onclick=()=>openCase(b.dataset.id));
+}
+
+/* Copy email */
+document.querySelectorAll(".copybtn").forEach(b=>b.onclick=()=>{
+  const em=b.dataset.email,msg=b.closest(".card").querySelector(".copied");
+  const done=t=>{if(msg)msg.textContent=t;};
+  try{navigator.clipboard.writeText(em).then(()=>{done("Copied: "+em);b.textContent="Copied";setTimeout(()=>b.textContent="Copy email",1600);},()=>done("Email: "+em+" (select and copy)"));}catch(_){done("Email: "+em+" (select and copy)");}
+});
+/* Jump links (instant, no scroll animation) */
+document.querySelectorAll("[data-go]").forEach(a=>a.addEventListener("click",e=>{const el=$(a.dataset.go);if(!el)return;e.preventDefault();el.scrollIntoView({block:"start"});}));
+document.getElementById("dlg").addEventListener("click",e=>{if(e.target.id==="dlg")e.target.close();});
+
+renderBento();
+</script>
+
+</body></html>
