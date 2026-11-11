@@ -1,5 +1,16 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Isha Nawaz · Business & Data Analyst</title>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>Isha Nawaz · Business & Data Analyst</title>
+<meta name="description" content="Business & Data Analyst portfolio: AI agents that cut analysis from 7 days to 3 minutes, live tools like CV Fit, and five end-to-end case studies.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://isha-nawaz.vercel.app/">
+<meta property="og:title" content="Isha Nawaz · Business & Data Analyst">
+<meta property="og:description" content="AI agents that cut analysis from 7 days to 3 minutes, live tools like CV Fit, and five end-to-end case studies.">
+<meta property="og:image" content="https://isha-nawaz.vercel.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://isha-nawaz.vercel.app/og-image.png">
+</head><body>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tomorrow:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap">
@@ -405,7 +416,11 @@ dialog{background:#15120c;border-color:rgba(226,170,24,.3)}
   .sec h2{font-size:22px}
   .lanes > div{grid-template-columns:minmax(0,1fr);gap:8px}
 }
-@media (prefers-reduced-motion:reduce){.touch{transition:none}}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.touch{transition:none}html{scroll-behavior:auto}}
 </style>
 <!-- body -->
 <header class="top">
@@ -626,7 +641,7 @@ dialog{background:#15120c;border-color:rgba(226,170,24,.3)}
   <span>Built with HTML, CSS &amp; JavaScript · Data in case studies is labelled real, simulated or fictional</span>
 </footer>
 
-<dialog id="dlg" aria-labelledby="dlg-title"><div class="dlg" id="dlgbody"></div></dialog>
+<dialog id="dlg" aria-labelledby="dlg-title" data-lenis-prevent><div class="dlg" id="dlgbody"></div></dialog>
 
 <script>
 const TYPES={AI:{label:"AI agents",color:"--c-ai"},BI:{label:"BI & dashboards",color:"--c-bi"},AN:{label:"Data analysis",color:"--c-an"},RS:{label:"Business analysis",color:"--c-rs"}};
@@ -905,6 +920,20 @@ renderBento();
     if("IntersectionObserver" in window)new IntersectionObserver(e=>{visible=e[0].isIntersecting;last=0;}).observe(cv);
     requestAnimationFrame(loop);
   }
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script>
+(function(){
+  if(!window.Lenis||(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches))return;
+  const lenis=new Lenis({duration:1.15,easing:t=>Math.min(1,1.001-Math.pow(2,-10*t)),smoothWheel:true});
+  function raf(t){lenis.raf(t);requestAnimationFrame(raf);}requestAnimationFrame(raf);
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{
+    const id=a.getAttribute("href");if(id.length<2)return;const el=document.querySelector(id);if(!el)return;
+    e.preventDefault();lenis.scrollTo(el,{offset:-88});history.replaceState(null,"",id);
+  }));
+  const dlg=document.getElementById("dlg");
+  if(dlg){new MutationObserver(()=>dlg.open?lenis.stop():lenis.start()).observe(dlg,{attributes:true,attributeFilter:["open"]});}
 })();
 </script>
 
